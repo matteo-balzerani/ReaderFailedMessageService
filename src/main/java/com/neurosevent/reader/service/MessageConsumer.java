@@ -36,6 +36,7 @@ public class MessageConsumer {
 			messages.parallelStream().forEach(mess -> {
 				if (messageSender.sendToSubscriber(mess)) {
 					messageRepo.delete(mess);
+					log.info("deleted {}",mess.get_id());
 				}
 			});
 		} catch (Exception ex) {
@@ -48,8 +49,8 @@ public class MessageConsumer {
 	public void read10mins() {
 		try {
 			List<Message> messages = messageRepo.findByLastSentDateBetween(
-					Instant.now().minusSeconds(TimeUnit.MINUTES.toSeconds(5)),
-					Instant.now().minusSeconds(TimeUnit.MINUTES.toSeconds(10)));
+					Instant.now().minusSeconds(TimeUnit.MINUTES.toSeconds(10)),
+					Instant.now().minusSeconds(TimeUnit.MINUTES.toSeconds(5)));
 			log.info("10mins check- {}", messages.size());
 			messages.parallelStream().forEach(mess -> {
 				if (messageSender.sendToSubscriber(mess)) {

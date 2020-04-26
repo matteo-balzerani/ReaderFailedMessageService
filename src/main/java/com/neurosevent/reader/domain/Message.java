@@ -10,7 +10,8 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
-import net.minidev.json.annotate.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 
 @Document(collection = "message")
 public class Message implements Serializable {
@@ -70,4 +71,7 @@ public class Message implements Serializable {
 		this.lastSentDate = lastSentDate;
 	}
 
+	public String get_id() {
+		return _id;
+	}
 }

@@ -2,21 +2,23 @@ spring:
    application:
      name: reader
    profiles: 
-    active: dev
+    active: local
    jackson:
     serialization:
       indent-output: true
    data:
     mongodb:
-      uri: ${MONGODB_URI}
+      uri: mongodb://localhost:27017/unreaded
 server:
   port: 8090
 logging:
   level:
     ROOT: INFO
 mocked_sub:
-  url: "http://mocked_subscribed:5000/mock"
+  url: http://localhost:1666/mock
 #todo:
 scheduler:
   5mis: 10000
   10mis: 30000
+  
+  
