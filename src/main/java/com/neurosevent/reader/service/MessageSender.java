@@ -26,7 +26,7 @@ public class MessageSender {
 
 	@Autowired
 	private ObjectMapper objMapper;
-	
+
 	@Value("${mocked_sub.url}")
 	private String subUrl;
 
@@ -34,14 +34,18 @@ public class MessageSender {
 		try {
 			String jsonStr = objMapper.writeValueAsString(data);
 			HttpEntity<String> request = new HttpEntity<String>(jsonStr, httpHeaders);
-			ResponseEntity<String> resultPost = restTemplate.postForEntity(subUrl, request,
-					String.class);
+			ResponseEntity<String> resultPost = restTemplate.postForEntity(getUrl(data), request, String.class);
 			log.info(resultPost.toString());
 		} catch (Exception e) {
 			log.error("error:  " + e.getMessage());
 			return false;
 		}
 		return true;
+	}
+
+	// check for dev
+	private String getUrl(Message data) {
+		return data.getSubscriberUrl().isEmpty() ? data.getSubscriberUrl() : subUrl;
 	}
 
 }

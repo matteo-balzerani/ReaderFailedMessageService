@@ -12,7 +12,6 @@ import org.springframework.data.mongodb.core.mapping.Field;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-
 @Document(collection = "message")
 public class Message implements Serializable {
 
@@ -29,6 +28,10 @@ public class Message implements Serializable {
 	@NotNull
 	@Field("payload")
 	private String payload;
+
+	@NotNull
+	@Field("subscriber")
+	private String subscriberUrl;
 
 	@CreatedDate
 	@Field("created_date")
@@ -74,4 +77,13 @@ public class Message implements Serializable {
 	public String get_id() {
 		return _id;
 	}
+
+	public String getSubscriberUrl() {
+		return subscriberUrl;
+	}
+
+	public void setSubscriberUrl(String subscriberUrl) {
+		this.subscriberUrl = subscriberUrl;
+	}
+
 }
