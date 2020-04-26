@@ -1,0 +1,20 @@
+spring:
+   application:
+     name: reader
+   profiles: 
+    active: dev
+   jackson:
+    serialization:
+      indent-output: true
+   data:
+    mongodb:
+      uri: mongodb://localhost:27017/unreaded
+server:
+  port: 8090
+logging:
+  level:
+    ROOT: INFO
+#todo:
+scheduler:
+  5mis: 10000
+  10mis: 30000
