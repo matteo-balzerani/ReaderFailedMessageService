@@ -12,6 +12,7 @@ import org.springframework.web.client.RestTemplate;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.neurosevent.reader.domain.Message;
+import com.neurosevent.reader.dto.MessageConsumedDTO;
 
 @Service
 public class MessageSender {
@@ -32,15 +33,20 @@ public class MessageSender {
 
 	public Boolean sendToSubscriber(Message data) {
 		try {
-			String jsonStr = objMapper.writeValueAsString(data);
+			String jsonStr = objMapper.writeValueAsString(messageDTO(data));
+			String url = getUrl(data);
 			HttpEntity<String> request = new HttpEntity<String>(jsonStr, httpHeaders);
-			ResponseEntity<String> resultPost = restTemplate.postForEntity(getUrl(data), request, String.class);
+			ResponseEntity<String> resultPost = restTemplate.postForEntity(url, request, String.class);
 			log.info(resultPost.toString());
 		} catch (Exception e) {
 			log.error("error:  " + e.getMessage());
 			return false;
 		}
 		return true;
+	}
+
+	private MessageConsumedDTO messageDTO(Message m) {
+		return new MessageConsumedDTO(m.getTopic(), m.getPayload());
 	}
 
 	// check for dev
